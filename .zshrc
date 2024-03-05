@@ -11,21 +11,17 @@ export PATH=$PATH:$ANDROID_HOME/emulator
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$(go env GOPATH)/bin
+export PATH=$PATH:$(go env GOROOT)/bin
+export PATH=$PATH:/usr/local/go/bin
 PATH=~/.console-ninja/.bin:$PATH
-
-
-export PATH="/usr/local/go/bin:$PATH"
-
-
 
 
 ZSH_THEME="spaceship"
 
-
 plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
-
 
 SPACESHIP_PROMPT_ORDER=(
   user          
@@ -71,7 +67,6 @@ SPACESHIP_GOLANG_SUFFIX=$SPACESHIP_PROMPT_DEFAULT_SUFFIX
 SPACESHIP_GOLANG_SYMBOL="🐹 ➜ "	
 SPACESHIP_GOLANG_COLOR="cyan"	
 
-
 export NVM_DIR="$HOME/.nvm"
  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -98,19 +93,19 @@ zinit light-mode for \
     zdharma-continuum/zinit-annex-patch-dl \
     zdharma-continuum/zinit-annex-rust
 
-
 # Two regular plugins loaded without investigating.
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma-continuum/fast-syntax-highlighting
-zplugin light zsh-users/zsh-completions
-zplugin light buonomo/yarn-completion
+zinit light zsh-users/zsh-completions
+zinit ice atload"_zsh_autosuggest_start"
+zinit light zsh-users/zsh-autosuggestions
 
-# Snippet
-zinit snippet https://gist.githubusercontent.com/hightemp/5071909/raw/
+
+# Reload zsh
+alias reload="source ~/.zshrc"
 
 # Alias GoLang
 alias go='/usr/local/go/bin/go'
-
 
 # alias zshrc
 alias zshrc='code ~/.zshrc'
@@ -161,3 +156,4 @@ alias _start-update="yarn && bundle install && (cd ios && bundle exec pod instal
 # docker-compose logs -f -> Ver os logs do Docker Compose
 
 # -------------------------------------------------------- #
+
