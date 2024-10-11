@@ -15,6 +15,9 @@ export PATH=$PATH:$(go env GOPATH)/bin
 export PATH=$PATH:$(go env GOROOT)/bin
 export PATH=$PATH:/usr/local/go/bin
 PATH=~/.console-ninja/.bin:$PATH
+export PATH=$PATH:/Applications/IntelliJ\ IDEA.app/Contents/MacOS
+export PATH="/opt/homebrew/opt/mongodb-community@6.0/bin:$PATH"
+
 
 
 ZSH_THEME="spaceship"
@@ -80,8 +83,8 @@ if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
         print -P "%F{160} The clone has failed.%f%b"
 fi
 
-## Rbenv configuration
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+eval "$(rbenv init -)"
+export PATH="$HOME/.rbenv/bin:$PATH"
 
 source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
@@ -110,6 +113,9 @@ alias go='/usr/local/go/bin/go'
 # alias zshrc
 alias zshrc='code ~/.zshrc'
 
+# alias Gol-Projeto-Cru
+alias gol-cru="cd ~/GOL-PROJETO-CRU/GOL_APP_Mobile && code ."
+
 # alias Change Xcode Version
 alias xcode_14="sudo xcode-select -s /Applications/Xcode-14.2.0.app/Contents/Developer"
 
@@ -118,24 +124,45 @@ alias close_all_ios="xcrun simctl shutdown all"
 alias erase_all_ios="xcrun simctl erase all"
 
 #alias Gol
-alias _ios='yarn ios --simulator "iPhone 14 Pro Max (iOS 16.2)"'
-alias _ios_8='yarn ios --simulator 'iPhone 8' --udid "46712FF5-6651-4CD9-B834-285FE9E16A3C"'
+alias _ios='yarn ios --simulator "iPhone 15 Pro Max"'
+alias _ios_prod="ENVFILE=.env.production yarn ios --simulator 'iPhone 15 Pro Max'"
+alias _ios_tsts="ENVFILE=.env.test yarn ios --simulator 'iPhone 15 Pro Max'"
+alias _install="yarn && yarn cache clean && rm -rf .yarn"
+alias _gol="cd ~/GOL_APP_Mobile && code . && _ios"
+alias _gol_install="_install && yarn pod && _ios"
 
-alias _ios_staging='yarn ios:staging --simulator "iPhone 14 Pro Max (iOS 16.2)"'
-alias ios_prod='ENVFILE=.env.production yarn ios --simulator "iPhone 14 Pro Max (iOS 16.2)"'
-alias android_prod='./ENV=prod yarn android'
+# alias Jest NPM
+alias ntest="npm run test"
+alias nwatch="npm run watch"
+alias ncov="npm run coverage"
+
+# alias Jest Yarn
+alias ytest="yarn jest --passWithNoTests"
+alias ywatch="yarn jest --passWithNoTests --watch"
+alias ycov="yarn jest --passWithNoTests --coverage"
 
 # alias React Native
-alias clean-ios="rm -rf ~/Library/Developer/Xcode/DerivedData && rm -rf ~/Library/Caches/CocoaPods && rm -rf ios/build && rm -rf ios/Pods && bundle exec pod install && cd .. && _ios"
+alias clean-ios="rm -rf ~/Library/Developer/Xcode/DerivedData && rm -rf ~/Library/Caches/CocoaPods && rm -rf ios/build && rm -rf ios/Pods"
 alias clean-android="(cd android && ./gradlew clean) && rm -rf node_modules && yarn"
 alias clean-gradlew="(cd android && ./gradlew clean)"
 alias _start="yarn && bundle install && (cd ios && bundle exec pod install) && _ios"
 alias _start-update="yarn && bundle install && (cd ios && bundle exec pod install --repo-update) && _ios"
+alias git_cached="git rm --cached NOME_DO_ARQUIVO"
+
+# Alias Projeto CoffStack 
+
+alias _coff="cd ~/CoffStack/nubbleApp && code . && _ios"
 
 # Docs -------------------------------------------------------------------------------- #
 
 ## Golang
 # GOOS=windows go build hello.go -> Caso queira trocar o SO que aceita o serviço. Pode ser chegado com go env, lá terá todos os ENVS do projeto.
+
+alias go-bench="go test -bench=."
+alias go-test="go test -v"
+alias go-coverage="go test -coverprofile=coverage.out && go tool cover -html=coverage.out"
+alias go-test-fuzz="go test -fuzz=."
+alias go-init-project="mkdir internal pkg cmd test api configs && cd cmd && mkdir server && cd server && touch main.go && cd ../../"
 
 # -------------------------------------------------------- # 
 
@@ -155,5 +182,20 @@ alias _start-update="yarn && bundle install && (cd ios && bundle exec pod instal
 # docker-compose down -> Parar o Docker Compose e deletar os containers
 # docker-compose logs -f -> Ver os logs do Docker Compose
 
+## <<<< DICA >>>> Limpar todos os containers no docker de uma vez só.
+# docker rm $(docker ps -a -q) -f
+# ALIAS PARA LIMPAR TODOS OS CONTAINERS
+docker-clean() {
+  containers=$(docker ps -a -q)
+  if [ -n "$containers" ]; then
+    docker rm -f $containers
+  else
+    echo "Tudo na paz mestre!! Não tem nenhum container rodando."
+  fi
+}
+
+
 # -------------------------------------------------------- #
 
+
+export PATH="/opt/homebrew/bin:$PATH"
